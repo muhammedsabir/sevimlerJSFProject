@@ -1,0 +1,172 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="musteriGirisForm" rendered="#{identity.loggedIn}">
+			<h:messages />
+			<rich:panel header="Urun Giris">
+				<f:facet name="header">Müşteri Ürün Giriş</f:facet>
+				<h:panelGrid columns="2">
+					<s:decorate id="srField" template="layout/edit.xhtml">
+						<ui:define name="label">MusteriAd</ui:define>
+						<h:inputText id="mAd" required="true"
+							value="#{musteriGirisHome.instance.name}" />
+					</s:decorate>
+					<s:decorate id="seriField" template="layout/edit.xhtml">
+						<ui:define name="label">Cihaz Seri No</ui:define>
+						<h:inputText id="seriId" required="true"
+							value="#{musteriGirisHome.instance.cihazSeriNo}" />
+					</s:decorate>
+
+					<s:decorate id="markaField" template="layout/edit.xhtml">
+						<ui:define name="label">Marka</ui:define>
+
+						<h:selectOneMenu id="markaId" required="true"
+							value="#{musteriGirisHome.instance.marka}" > 
+							<s:selectItems value="#{markaList.resultList}" var="m"
+								label="#{m.name}" noSelectionLabel="Lutfen Seciniz">
+
+							</s:selectItems>
+							<s:convertEntity />
+							<a4j:support event="onchange" ajaxSingle="true"
+								action="#{comboDoldur.musteriModelDoldur}" reRender="model" />
+						</h:selectOneMenu>
+
+					</s:decorate>
+					<a4j:outputPanel id="model">
+						<s:decorate id="modelField" template="layout/edit.xhtml">
+							<!-- <h:outputText id="mId" value="{musteriGirisHome.instance.marka.id}" /> -->
+							<ui:define name="label">Model</ui:define>
+							<h:selectOneMenu id="modelId" required="true"
+								value="#{musteriGirisHome.instance.model}">
+								<s:selectItems var="m" value="#{comboDoldur.lst}"
+									label="#{m.name}" noSelectionLabel="Lutfen Seciniz" />
+								<s:convertEntity />
+							</h:selectOneMenu>
+
+						</s:decorate>
+					</a4j:outputPanel>
+
+
+					<s:decorate id="tarihField" template="layout/edit.xhtml">
+						<ui:define name="label">Kayit Tarihi</ui:define>
+						<rich:calendar value="#{musteriGirisHome.instance.kayitTarihi}"
+							required="true" datePattern="dd/M/yy HH:mm" />
+
+					</s:decorate>
+					
+					<s:decorate id="tlfField" template="layout/edit.xhtml">
+						<ui:define name="label">Telefon</ui:define>
+						<h:inputText value="#{musteriGirisHome.instance.telefon}"
+							required="false" />
+					</s:decorate>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+					<s:decorate id="adresField" template="layout/edit.xhtml">
+						<ui:define name="label">Adres</ui:define>
+						<h:inputTextarea value="#{musteriGirisHome.instance.adres}"
+							rows="2" cols="60" required="false" />
+
+					</s:decorate>
+					
+					<s:decorate id="arizaField" template="layout/edit.xhtml">
+						<ui:define name="label">Arizasi</ui:define>
+						<h:inputTextarea value="#{musteriGirisHome.instance.ariza}"
+							rows="2" cols="60" required="true" />
+
+					</s:decorate>
+					<s:decorate id="fizikselField" template="layout/edit.xhtml">
+						<ui:define name="label">Fiziksel Durumu</ui:define>
+						<h:inputTextarea
+							value="#{musteriGirisHome.instance.fizikselDurumu}" rows="2"
+							cols="60" />
+
+					</s:decorate>
+					<s:decorate id="emailField" template="layout/edit.xhtml">
+						<ui:define name="label">E-Mail</ui:define>
+						<h:inputText value="#{musteriGirisHome.instance.emailAdres}" required="true"/>
+					</s:decorate>
+		
+					
+						<s:decorate id="aksesuarField" template="layout/edit.xhtml">
+							<ui:define name="label">Aksesuar Durumu</ui:define>
+							<rich:pickList value="#{musteriGirisHome.instance.aksesuarType}">
+							          <s:selectItems var="data" value="#{aksesuarList.resultList}" label="#{data.name}"></s:selectItems>
+							<s:convertEntity/>
+							</rich:pickList>
+							
+						</s:decorate>
+					</h:panelGrid>		
+				
+
+			</rich:panel>
+			<rich:panel header="Urun Servis Tespit">
+				<f:facet name="header">Urun Servis Tespit</f:facet>
+				<h:panelGrid columns="1">
+					<s:decorate id="tespitField" template="layout/edit.xhtml">
+						<ui:define name="label">Ariza Tespit</ui:define>
+						<h:inputTextarea value="#{musteriGirisHome.instance.arizaTespit}"
+							rows="2" cols="40" style=" width : 562px;" />
+
+					</s:decorate>
+					<s:decorate id="aciklamaField" template="layout/edit.xhtml">
+						<ui:define name="label">Aciklama</ui:define>
+						<h:inputTextarea value="#{musteriGirisHome.instance.aciklama}"
+							rows="2" cols="40" style=" width : 562px;" />
+
+					</s:decorate>
+					<h:panelGrid columns="2">
+						<s:decorate id="ucretField" template="layout/edit.xhtml">
+							<ui:define name="label">Ucret</ui:define>
+							<h:inputText value="#{musteriGirisHome.instance.ucret}" />
+
+						</s:decorate>
+						<s:decorate id="cikisTarihField" template="layout/edit.xhtml">
+							<ui:define name="label">Cikis Tarihi</ui:define>
+							<rich:calendar value="#{musteriGirisHome.instance.cikisTarihi}"
+								required="false" datePattern="dd/M/yy HH:mm" />
+
+						</s:decorate>
+					</h:panelGrid>
+					<div style="clear: both" />
+				</h:panelGrid>
+			</rich:panel>
+			<rich:panel header="Urun Onay">
+				<f:facet name="header">Urun Onay</f:facet>
+				<h:panelGrid columns="3">
+					<h:selectOneRadio value="#{musteriGirisHome.instance.onay}">
+						<f:selectItem itemLabel="Bekliyor" itemValue="Bekliyor" />
+						<f:selectItem itemLabel="Onaylandi" itemValue="Onaylandi" />
+						<f:selectItem itemLabel="Rededildi" itemValue="Rededildi" />
+						<f:selectItem itemLabel="Hazir" itemValue="Hazir" />
+					</h:selectOneRadio>
+				</h:panelGrid>
+			</rich:panel>
+
+			<div class="actionButtons"><h:commandButton id="save"
+				value="Kaydet" action="#{musteriGirisHome.persist}"
+				rendered="#{!musteriGirisHome.managed}" /> <h:commandButton
+				id="update" value="Guncelle" action="#{musteriGirisHome.update}"
+				rendered="#{musteriGirisHome.managed}" /> <h:commandButton
+				id="delete" value="Sil" action="#{musteriGirisHome.remove}"
+				immediate="true" rendered="#{musteriGirisHome.managed}" /> <s:button
+				propagation="end" id="cancel" value="Listele"
+				view="/musteriGirisList.xhtml" />
+				<s:button
+				action="#{rapor.dizaynReportMusteri()}" value="Rapor">
+				<f:param name="memberid" value="#{musteriGirisHome.instance.id}" /></s:button>
+				</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

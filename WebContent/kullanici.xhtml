@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="kullaniciForm" rendered="#{identity.loggedIn}" >
+
+			<rich:panel header="Kullanici">
+
+
+				<s:decorate id="nameField" template="layout/edit.xhtml">
+					<ui:define name="label">UserName:</ui:define>
+					<h:inputText id="name" required="true"
+						value="#{kullaniciHome.instance.name}" />
+				</s:decorate>
+				<s:decorate id="passField" template="layout/edit.xhtml">
+					<ui:define name="label">Password:</ui:define>
+					<h:inputText id="name" required="true"
+						value="#{kullaniciHome.instance.pass}" />
+				</s:decorate>
+				<s:decorate id="roleField" template="layout/edit.xhtml">
+					<ui:define name="label">Role</ui:define>
+					<h:selectOneMenu value="#{kullaniciHome.instance.role}" required="true">
+						<s:selectItems var="role" value="#{roleList.resultList}"
+						 label="#{role.name}" noSelectionLabel="Lutfen Seciniz"/>
+						 <s:convertEntity/>
+					</h:selectOneMenu>
+				</s:decorate>
+				<div style="clear: both" />
+
+			</rich:panel>
+			<h:panelGrid columns="4" rendered="#{s:hasRole('admin')}">
+			<div class="actionButtons"><h:commandButton id="save"
+				value="Kaydet" action="#{kullaniciHome.persist}"
+				rendered="#{!kullaniciHome.managed}" /> <h:commandButton
+				id="update" value="Güncelle" action="#{kullaniciHome.update}"
+				rendered="#{kullaniciHome.managed}" /> <h:commandButton id="delete"
+				value="Sil" action="#{kullaniciHome.remove}" immediate="true"
+				rendered="#{kullaniciHome.managed}" /> <s:button propagation="end"
+				id="cancel" value="Listele" view="/kullaniciList.xhtml" /></div>
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

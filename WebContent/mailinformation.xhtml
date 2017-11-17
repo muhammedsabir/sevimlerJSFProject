@@ -1,0 +1,93 @@
+<m:message charset="UTF-8" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:m="http://jboss.com/products/seam/mail"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich"
+    importance="normal">
+  
+    <m:from name="sevimler elektronik" address="muhammedsabir14@gmail.com" />
+ <!--    
+    <m:to address="selcuklu34@hotmail.com"/>  
+    <m:to address="muhammedsabir14@gmail.com"/> -->
+    
+    <ui:repeat value="#{Mailinformation.lstMail}" var="m">
+		<m:to address="#{m.toString()}" />
+	</ui:repeat>
+    
+    
+    <m:subject>sevimler servis , #{Mailinformation.urunGiris.sr}</m:subject>
+    
+    <m:body>
+      <html>
+       <body>
+
+    	<table>
+    	<tr> 
+    	 <td>SR NO    :</td>
+       	 <td>#{Mailinformation.urunGiris.sr} </td>
+       	</tr>
+       	<tr>
+       	 <td>SERI No  :</td>    
+		 <td>#{Mailinformation.urunGiris.seri}</td>		
+		</tr>
+       	<tr>
+		
+		 <td>Magaza   :</td>
+		 <td>#{Mailinformation.urunGiris.magaza.name}</td>
+	    </tr>
+       	<tr>
+		
+		 <td>Sube     :</td>
+		 <td>#{Mailinformation.urunGiris.sube.name}</td>
+	    </tr>
+       	<tr>
+		
+		 <td>Marka    :</td>	
+         <td>#{Mailinformation.urunGiris.marka.name}</td>
+        </tr>
+       	<tr> 
+        
+         <td>Model    :</td>    
+         <td>#{Mailinformation.urunGiris.model.name}</td>
+        </tr>
+       	<tr>
+        
+         <td>Ariza    :</td>                
+         <td>#{Mailinformation.urunGiris.ariza}</td>
+        </tr>
+       	<tr>
+        
+         <td>Tespit   :</td>        
+         <td>#{Mailinformation.urunGiris.arizaTespit}</td>
+        </tr>
+       	<tr>
+        
+         <td>Ucret    :</td>        
+         <td>#{Mailinformation.urunGiris.ucret}</td>
+        </tr>
+        <tr>
+        
+         <td>Durumu    :</td>        
+         <td>#{Mailinformation.urunGiris.onay}</td>
+        </tr>
+        </table>
+        <h3 align="left" >Bilgilendirme mail'i otomatik olarak sistem tarafından gonderilmistir '</h3>
+		 <!-- 
+		 	SR NO    :#{urunGiris.sr}     
+		SERI No  :#{urunGiris.seri}		
+		Magaza   :#{urunGiris.magaza.name}
+		Sube     :#{urunGiris.sube.name}	
+        Marka    :#{urunGiris.marka.name}     
+        Model    :#{urunGiris.model.name}                
+        Ariza    :#{urunGiris.ariza}        
+        Tespit   :#{urunGiris.arizaTespit}        
+        Ucret    :#{urunGiris.ucret}
+		  -->       
+        </body>
+        </html>
+        <!-- <a href="http://labs.jboss.com/jbossseam">http://labs.jboss.com/jbossseam</a>.</p> -->
+		
+    </m:body>
+    
+</m:message>

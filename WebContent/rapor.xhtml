@@ -1,0 +1,102 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml"
+	xmlns:excel="http://jboss.com/products/seam/excel">
+
+	<ui:define name="body">
+
+		<h:form id="raporForm" rendered="#{identity.loggedIn}">
+
+			<rich:panel>
+				<f:facet name="header">Rapor</f:facet>
+				<rich:dataTable value="#{urunGirisList.resultList}" var="urun"
+					rows="20" reRender="ds" id="simpletable">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column colspan="8">
+								<h:outputText value="Filitreleme Ekran" />
+							</rich:column>
+						    <rich:column breakBefore="true">
+								<h:outputText value="Kayıt Id" />
+							</rich:column>
+							<rich:column >
+								<h:outputText value="Tarih" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="SR NO" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Seri / imei" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Magaza" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Marka" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Model" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Onay Durumu" />
+							</rich:column>
+
+						</rich:columnGroup>
+					</f:facet>
+					<rich:column filterBy="#{urun.id}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.id}">
+							
+						</h:outputText>
+					</rich:column>
+					<rich:column filterBy="#{urun.kayitTarihi}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.kayitTarihi}">
+							<s:convertDateTime />
+						</h:outputText>
+					</rich:column>
+					<rich:column filterBy="#{urun.sr}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.sr}" />
+					</rich:column>
+					<rich:column filterBy="#{urun.seri}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.seri}" />
+					</rich:column>
+					<rich:column filterBy="#{urun.magaza.name}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.magaza.name}" />
+					</rich:column>
+
+					<rich:column filterBy="#{urun.marka.name}" filterEvent="onkeyup">
+						<!-- filterValue="#{capitalsBean.currentStateFilterValue}" -->
+						<h:outputText value="#{urun.marka.name}" />
+					</rich:column>
+					<rich:column filterBy="#{urun.model.name}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.model.name}" />
+					</rich:column>
+					<rich:column filterBy="#{urun.onay}" filterEvent="onkeyup">
+						<h:outputText value="#{urun.onay}" />
+					</rich:column>
+					<f:facet name="footer">
+						<rich:datascroller id="ds"></rich:datascroller>
+						<!-- renderIfSinglePage="false"-->
+					</f:facet>
+					<rich:datascroller for="simpletable"/>
+				</rich:dataTable>
+
+				<!--  
+				<a4j:commandButton action="#{capitalsBean.resetFilter}"
+					value="Reset Current Filtering" reRender="simpletable"
+					ajaxSingle="true" limitToList="true" />-->
+				<h:commandLink value="Export Excel"
+					action="#{excelExporter.export('raporForm:simpletable')}"/>
+					<!-- <div style="clear: both" />-->
+			</rich:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

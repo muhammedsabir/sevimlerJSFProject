@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+    
+    <ui:define name="body">
+
+        <h:form id="ReportsForm" rendered="#{identity.loggedIn}">
+        <rich:panel header="Üç Gündür Çevap Gelmeyen Çağrılar">
+           <rich:dataTable id="simpletable" rows="10" value="#{rapor.ucgunCevapBekleyenCagrilarList}" var="data">
+               <rich:column>
+        		 <f:facet name="header">Tarih</f:facet>
+        		  <h:outputText value="#{data.kayitTarihi}" >
+        		   <f:convertDateTime pattern="dd-MM-yyyy" />
+        		  </h:outputText>
+        		</rich:column>
+             	<rich:column> 
+        		 <f:facet name="header">SR NO</f:facet>
+        		    <h:outputText value="#{data.sr}" /> 
+        		 </rich:column>
+        		 <rich:column>
+        		 <f:facet name="header">Seri</f:facet>
+        		   <h:outputText value="#{data.seri}" /> 
+        		</rich:column>
+        		<rich:column>
+        		 <f:facet name="header">Madde Kodu</f:facet>
+        		  <h:outputText value="#{data.mkodu}" />
+        		</rich:column>
+        		<rich:column>
+        		 <f:facet name="header">Model</f:facet>
+        		   <h:outputText value=" #{data.model.name}" /> 
+        		</rich:column>
+        		<rich:column>
+        		 <f:facet name="header">Tespit</f:facet>
+        		  <h:outputText value="#{data.arizaTespit}" />
+        		</rich:column>
+        		<rich:column>
+        		 <f:facet name="header">Onay</f:facet>
+        		  <h:outputText value="#{data.onay}" />
+        		</rich:column>
+        	    <rich:column>
+        		 <f:facet name="header">Açıklama</f:facet>
+        		  <h:outputText value="#{data.aciklama}" />
+        		</rich:column>
+        		<rich:column>
+        		 <f:facet name="header">Üçret</f:facet>
+        		  <h:outputText value="#{data.ucret}" />
+        		</rich:column>
+           </rich:dataTable>
+           <rich:datascroller for="simpletable"/>
+        </rich:panel>
+        </h:form>
+    </ui:define>
+ </ui:composition>        

@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="subeForm" rendered="#{identity.loggedIn}">
+
+        <rich:panel>
+            <f:facet name="header">Sube</f:facet>
+
+            <s:decorate id="nameField" template="layout/edit.xhtml">
+                <ui:define name="label">Sube Ad</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{subeHome.instance.name}"/>
+            </s:decorate>
+
+            <div style="clear:both"/>
+
+        </rich:panel>
+        <h:panelGrid columns="4" rendered="#{s:hasRole('admin')}">
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Kaydet"
+                         action="#{subeHome.persist}"
+                       rendered="#{!subeHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Güncelle"
+                         action="#{subeHome.update}"
+                       rendered="#{subeHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Sil"
+                         action="#{subeHome.remove}"
+                      immediate="true"
+                       rendered="#{subeHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Listele"
+                             view="/subeList.xhtml"/>
+        </div>
+        </h:panelGrid>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

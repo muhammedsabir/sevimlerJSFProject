@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+<h:form>
+    <rich:panel>
+        <f:facet name="header">UrunGirisListe</f:facet>
+
+        <div class="results">
+
+            <h:outputText value="No urunGiris exists"
+                       rendered="#{empty urunGirisList.resultList}"/>
+
+            <rich:dataTable id="urunGirisList" var="urunGiris"
+                      value="#{urunGirisList.resultList}"
+                   rendered="#{not empty urunGirisList.resultList}" rows="10">
+                <rich:column filterBy="#{urunGiris.id}" filterEvent="onkeyup">
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputText value="#{urunGiris.id}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Tarih</f:facet>
+                    <h:outputText value="#{urunGiris.kayitTarihi}" >
+                    	 <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">SR No</f:facet>
+                    <s:link id="urunGiris"
+                         value="#{urunGiris.sr}"
+                   propagation="none"
+                         view="/urunGiris.xhtml">
+                        <f:param name="urunGirisId"
+                                value="#{urunGiris.id}"/>
+                        <f:param name="modelBilgiId"
+                                value="#{urunGiris.model.name}"/>
+                    </s:link>
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Seri / imei</f:facet>
+                    #{urunGiris.seri}
+                </rich:column>
+                 <rich:column>
+                    <f:facet name="header">Makina No</f:facet>
+                    #{urunGiris.mkodu}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Magaza</f:facet>
+                    #{urunGiris.magaza.name}                    
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Marka</f:facet>
+                    #{urunGiris.marka.name}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Model</f:facet>
+                    #{urunGiris.model.name}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Onay Durumu</f:facet>
+                    #{urunGiris.onay}
+                </rich:column>
+                <f:facet name="footer">
+                	<rich:datascroller selectedStyle="font-weight:bold"/>
+                </f:facet>
+            </rich:dataTable>
+
+        </div>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+        <s:button id="done"
+               value="Yeni ÜrunGiris"
+                view="/urunGiris.xhtml"/>
+    </div>
+</h:form>
+</ui:define>
+
+</ui:composition>

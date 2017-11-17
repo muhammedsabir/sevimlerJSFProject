@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+<style>
+tr.even-row td{
+   background-colour: #fcefa1;
+}
+td.odd-row td{
+   background-colour: #f7f7f7;
+}
+</style>
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">kullaniciList</f:facet>
+
+        <div class="results">
+
+            <h:outputText value="No kullanici exists"
+                       rendered="#{empty kullaniciList.resultList}"/>
+
+            <rich:dataTable id="kullaniciList" var="kullanici"
+                      value="#{kullaniciList.resultList}"
+                   rendered="#{not empty kullaniciList.resultList}" rowClasses="even-row, odd-row">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    #{kullanici.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Kullanıcı</f:facet>
+                    <s:link id="kullanici"
+                         value="#{kullanici.name}"
+                   propagation="none"
+                         view="/kullanici.xhtml">
+                        <f:param name="kullaniciId"
+                                value="#{kullanici.id}"/>
+                    </s:link>
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">Role</f:facet>
+                    #{kullanici.role.name}
+                </h:column>
+            </rich:dataTable>
+
+        </div>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+        <s:button id="done"
+               value="Create kullanici"
+                view="/kullanici.xhtml"/>
+    </div>
+
+</ui:define>
+
+</ui:composition>

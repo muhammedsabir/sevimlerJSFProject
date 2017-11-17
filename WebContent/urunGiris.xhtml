@@ -1,0 +1,204 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="urunGirisForm" rendered="#{identity.loggedIn}">
+			<!--  <h:messages />-->
+			<h:outputText value="" rendered="#{urunGirisHome.flag}" >
+			<h:outputLabel value="#{urunGirisHome.modelBilgiId}" />
+			
+			</h:outputText>
+			<rich:panel header="Urun Giris">
+				<f:facet name="header">Urun Giris</f:facet>
+				<h:panelGrid columns="2">
+					<s:decorate id="srField" template="layout/edit.xhtml">
+						<ui:define name="label">SR No</ui:define>
+						<h:inputText id="srId" required="true"
+							value="#{urunGirisHome.instance.sr}" /><h:outputLabel value="#{urunGirisHome.modelBilgiId}" />
+					</s:decorate>
+					<s:decorate id="seriField" template="layout/edit.xhtml">
+						<ui:define name="label">Seri No</ui:define>
+						<h:inputText id="seriId" required="true"
+							value="#{urunGirisHome.instance.seri}" />
+					</s:decorate>
+					<s:decorate id="mkodField" template="layout/edit.xhtml">
+						<ui:define name="label">M.Kodu</ui:define>
+						<h:inputText id="mkoduId" required="true"
+							value="#{urunGirisHome.instance.mkodu}" />
+					</s:decorate>
+					<s:decorate id="magazaField" template="layout/edit.xhtml">
+						<ui:define name="label">Magaza</ui:define>
+
+						<h:selectOneMenu id="magazaId" required="true"
+							value="#{urunGirisHome.instance.magaza}">
+							<s:selectItems value="#{magazaList.resultList}" var="m"
+								label="#{m.name}" noSelectionLabel="Lutfen Seciniz" />
+							<s:convertEntity />
+						</h:selectOneMenu>
+
+					</s:decorate>
+					<s:decorate id="markaField" template="layout/edit.xhtml">
+						<ui:define name="label">Marka</ui:define>
+
+						<h:selectOneMenu id="markaId" required="true"
+							value="#{urunGirisHome.instance.marka}">
+							<s:selectItems value="#{markaList.resultList}" var="m"
+								label="#{m.name}" noSelectionLabel="Lutfen Seciniz">
+
+							</s:selectItems>
+							<s:convertEntity />
+							<a4j:support event="onchange" ajaxSingle="true" 
+								action="#{comboDoldur.modelDoldur}" reRender="model" status="statusId"/>
+						</h:selectOneMenu>
+					    <a4j:status id="statusId" startText="Bekleyin.." startStyle="background-color:#ffA500"/>		
+					</s:decorate>
+					<a4j:outputPanel id="model">
+						<s:decorate id="modelField" template="layout/edit.xhtml">
+							<!-- <h:outputText id="mId" value="{urunGirisHome.instance.marka.id}" /> -->
+							<ui:define name="label">Model</ui:define>
+							<h:selectOneMenu id="modelId" required="true"
+								value="#{urunGirisHome.instance.model}">
+								<!-- <h:outputText value="" rendered="#{urunGirisHome.flag}" >
+								<s:selectItems var="m" value="#{urunGirisHome.modelBilgiId}"
+									label="#{urunGirisHome.modelBilgiId}" noSelectionLabel="Lutfen Seciniz" />
+								<s:convertEntity />
+								</h:outputText> -->
+								<s:selectItems var="m" value="#{comboDoldur.lst}"
+									label="#{m.name}" noSelectionLabel="Lutfen Seciniz" />
+								<s:convertEntity />
+							</h:selectOneMenu>
+
+						</s:decorate>
+					</a4j:outputPanel>
+					<s:decorate id="aksesurField" template="layout/edit.xhtml">
+						<ui:define name="label">Sube</ui:define>
+
+						<h:selectOneMenu value="#{urunGirisHome.instance.sube}">
+							<s:selectItems var="sube" value="#{subeList.resultList}"
+								label="#{sube.name}" noSelectionLabel="Lutfen Seciniz" />
+							<s:convertEntity />
+						</h:selectOneMenu>
+
+
+					</s:decorate>
+
+					<s:decorate id="tarihField" template="layout/edit.xhtml">
+						<ui:define name="label">Kayit Tarihi</ui:define>
+						<rich:calendar value="#{urunGirisHome.instance.kayitTarihi}"
+							required="true" datePattern="dd/M/yy HH:mm" locale="#{localeSelector.locale}"/>
+
+					</s:decorate>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+					<s:decorate id="aksesuarField" template="layout/edit.xhtml">
+						<ui:define name="label">Aksesuar Durumu</ui:define>
+						<rich:pickList value="#{urunGirisHome.instance.aksesuarType}">
+						    <f:selectItems value="#{comboDoldur.aksesuarDoldur}"/>
+							<!-- <s:selectItems var="data" value="#{aksesuarList.resultList}" label="#{data.name}"></s:selectItems> -->
+						 <s:convertEntity/> 	
+						</rich:pickList>	
+						
+					</s:decorate>
+					
+					<s:decorate id="arizaField" template="layout/edit.xhtml">
+						<ui:define name="label">Arizasi</ui:define>
+						<h:inputTextarea value="#{urunGirisHome.instance.ariza}" rows="2"
+							cols="60" required="true" />
+
+					</s:decorate>
+					<s:decorate id="fizikselField" template="layout/edit.xhtml">
+						<ui:define name="label">Fiziksel Durumu</ui:define>
+						<h:inputTextarea value="#{urunGirisHome.instance.fizikselDurumu}"
+							rows="2" cols="60" />
+
+					</s:decorate>
+					
+				</h:panelGrid>
+			</rich:panel>
+			<rich:panel header="Urun Servis Tespit">
+				<f:facet name="header">Urun Servis Tespit</f:facet>
+				<h:panelGrid columns="1">
+					<s:decorate id="tespitField" template="layout/edit.xhtml">
+						<ui:define name="label">Ariza Tespit</ui:define>
+						<h:inputTextarea value="#{urunGirisHome.instance.arizaTespit}"
+							rows="2" cols="20" style=" width : 562px;" />
+
+					</s:decorate>
+					<s:decorate id="aciklamaField" template="layout/edit.xhtml">
+						<ui:define name="label">Aciklama</ui:define>
+						<h:inputTextarea value="#{urunGirisHome.instance.aciklama}"
+							rows="2" cols="20" style=" width : 562px;" />
+
+					</s:decorate>
+					<h:panelGrid columns="2">
+						<s:decorate id="ucretField" template="layout/edit.xhtml">
+							<ui:define name="label">Ucret</ui:define>
+							<h:inputText value="#{urunGirisHome.instance.ucret}" />
+
+						</s:decorate>
+						<s:decorate id="cikisTarihField" template="layout/edit.xhtml">
+							<ui:define name="label">Cikis Tarihi</ui:define>
+							<rich:calendar value="#{urunGirisHome.instance.cikisTarihi}"
+								required="false" datePattern="dd/M/yyyy" locale="#{localeSelector.locale}"/>
+
+						</s:decorate>
+					</h:panelGrid>
+					<div style="clear: both" />
+				</h:panelGrid>
+			</rich:panel>
+			<rich:panel header="Urun Onay">
+				<f:facet name="header">Urun Onay</f:facet>
+				<h:panelGrid columns="3">
+					<h:selectOneRadio value="#{urunGirisHome.instance.onay}">
+						<f:selectItem itemLabel="Bekliyor" itemValue="Bekliyor" />
+						<f:selectItem itemLabel="Onaylandi" itemValue="Onaylandi" />
+						<f:selectItem itemLabel="Rededildi" itemValue="Rededildi" />
+						<f:selectItem itemLabel="Hazir" itemValue="Hazir" />
+					</h:selectOneRadio>
+				</h:panelGrid>
+			</rich:panel>
+
+			<div class="actionButtons"><h:commandButton id="save"
+				value="Kaydet" action="#{urunGirisHome.persist}"
+				rendered="#{!urunGirisHome.managed}" />
+				<h:commandButton
+				id="update" value="Guncelle" action="#{urunGirisHome.update}"
+				rendered="#{urunGirisHome.managed}" onclick="if (!confirm('Guncellemek istediginizden emin misiniz?')) return false" />
+				 <h:commandButton id="delete"
+				value="Delete" action="#{urunGirisHome.remove}" immediate="true"
+				rendered="#{urunGirisHome.managed}" onclick="if (!confirm('Silmek istediginizden emin misiniz?')) return false" />
+				<s:button propagation="end"
+				id="cancel" value="Listele" view="/urunGirisList.xhtml" /> <s:button
+				action="#{rapor.dizaynReport}" value="Rapor">
+				<f:param name="memberid" value="#{urunGirisHome.instance.id}" />
+				<a4j:commandButton action="#{Mailinformation.send()}" value="Mail Gönder"/> 
+			</s:button></div>
+
+		</h:form>
+		<rich:modalPanel id="confirmation" width="250" height="150">
+			<f:facet name="header">Confirmation</f:facet>
+			<h:panelGrid>
+				<h:panelGrid columns="2">
+					<!-- <h:graphicImage value="/msginfo.png" /> -->
+					<h:outputText value="Guncellemek istediginizden eminmisiniz?" style="FONT-SIZE: large;" />
+				</h:panelGrid>
+				<h:panelGroup>
+					<input type="button" value="Devam"
+						onclick="#{rich:component('confirmation')}.hide();submit();return false" />
+					<input type="button" value="Vazgec"
+						onclick="#{rich:component('confirmation')}.hide();return false" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</rich:modalPanel>
+
+	</ui:define>
+
+</ui:composition>

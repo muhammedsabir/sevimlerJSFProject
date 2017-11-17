@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:e="http://jboss.com/products/seam/excel"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<e:workbook type="jxl">
+
+<e:worksheet value="#{reports.lst}" var="data">
+		<e:column>
+			<f:facet name="header">
+				<e:cell value="Seri No"/>
+			</f:facet>
+			<e:cell value="#{data.seri}"/>
+		</e:column>
+		<e:column>
+			<f:facet name="header">
+				<e:cell value="Arıza"/>
+			</f:facet>
+			<e:cell value="#{data.ariza}"/>
+		</e:column>
+		<e:column>
+			<f:facet name="header">
+				<e:cell value="Marka"/>
+			</f:facet>
+			<e:cell value="#{data.marka.name}"/>
+		</e:column>
+	</e:worksheet>
+</e:workbook>
+</html>

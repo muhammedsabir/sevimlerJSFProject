@@ -1,0 +1,49 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:form id="modelForm" rendered="#{identity.loggedIn}">
+
+			<rich:panel>
+				<f:facet name="header">Model</f:facet>
+
+				<s:decorate id="markaField" template="layout/edit.xhtml">
+					<ui:define name="label">Marka</ui:define>
+					<h:selectOneMenu value="#{modelHome.instance.marka}">
+						<s:selectItems var="m" label="#{m.name}" itemValue="#{m}" 
+						 noSelectionLabel="Lutfen Seciniz" value="#{markaList.resultList}"/>
+						<s:convertEntity/>
+					</h:selectOneMenu>
+				</s:decorate>
+
+				<s:decorate id="nameField" template="layout/edit.xhtml">
+					<ui:define name="label">Model Ad</ui:define>
+					<h:inputText id="name" required="true"
+						value="#{modelHome.instance.name}" />
+				</s:decorate>
+
+				<div style="clear: both" />
+
+			</rich:panel>
+            <h:panelGrid columns="4" rendered="#{s:hasRole('admin')}">
+			<div class="actionButtons"><h:commandButton id="save"
+				value="Kaydet" action="#{modelHome.persist}"
+				rendered="#{!modelHome.managed}" /> <h:commandButton id="update"
+				value="Güncelle" action="#{modelHome.update}"
+				rendered="#{modelHome.managed}" /> <h:commandButton id="delete"
+				value="Sil" action="#{modelHome.remove}" immediate="true"
+				rendered="#{modelHome.managed}" /> <s:button propagation="end"
+				id="cancel" value="Listele" view="/modelList.xhtml" /></div>
+            </h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

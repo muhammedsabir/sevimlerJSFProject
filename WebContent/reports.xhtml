@@ -1,0 +1,197 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml"
+	xmlns:excel="http://jboss.com/products/seam/excel">
+	
+
+<ui:define name="body">
+ <h:form id="ReportsForm" rendered="#{identity.loggedIn}">
+    <rich:panel>
+    <rich:tabPanel>
+    	<rich:tab label="Otomatik Sevkiyat">
+        <f:facet name="header">Sevkiyat</f:facet>
+		<!-- <a4j:form> -->
+        
+        	<h:selectOneMenu value="#{reports.value}">
+        		<f:selectItem itemLabel="Hazir" itemValue="Hazir"/>
+        		<f:selectItem itemLabel="Bekliyor" itemValue="Bekliyor"/>
+        		<f:selectItem itemLabel="Tespit Bekleyen" itemValue="is null"/>
+        	</h:selectOneMenu>
+	   		<h:selectOneMenu id="magazaId" value="#{reports.magazap}">
+	   			<s:selectItems value="#{magazaList.resultList}" var="data" label="#{data.name}" noSelectionLabel="Lutfen Seciniz"/>
+	   			<s:convertEntity />
+	   		</h:selectOneMenu>	
+			<h:commandButton id="r" value="Listele"
+                             action="#{reports.data}"/>		          
+  			<h:commandButton value="Otomatik Sevkiyat Hazırla" action="#{rapor.sevkiyatRapor()}"/>
+  			
+			
+       		<rich:dataTable id="simpletable" value="#{reports.lst}" var="data" rows="15"  >
+       			<!-- ajaxKeys="#{reports.rowsToUpdate}"
+       			      <a4j:support event="onRowClick"  
+                            action="#{reports.rowClickAction}" reRender="checkBox">  
+                            <f:setPropertyActionListener  
+                                target="#{reports.selectedFriend}" value="#{data}" />  
+                        </a4j:support> 
+       			-->
+       			<rich:column>
+                 <f:facet name="header">SR NO</f:facet>
+                    <h:outputText value="#{data.sr}" />
+                 </rich:column>
+                 <rich:column>
+                 <f:facet name="header">Seri</f:facet>
+                   <h:outputText value="#{data.seri}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Model</f:facet>
+                   <h:outputText value=" #{data.model.name}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Tespit</f:facet>
+                  <h:outputText value="#{data.arizaTespit}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Onay</f:facet>
+                  <h:outputText value="#{data.onay}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Açıklama</f:facet>
+                  <h:outputText value="#{data.aciklama}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Çıkış Tarihi</f:facet>
+                  <h:outputText value="#{data.cikisTarihi}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Ücret</f:facet>
+                 <h:outputText value="#{data.ucret}" />
+                </rich:column>
+              
+            </rich:dataTable>
+        	<rich:datascroller for="simpletable"/>
+        	
+		<!-- </a4j:form> -->
+		 </rich:tab>
+		 <rich:tab label="Manuel Sevkiyat">
+		 	<h:outputLabel value="Başlangıç Tarihi" />
+		 	<rich:calendar datePattern="dd/M/yyyy" value="#{reports.baslangicTarihi}" locale="#{localeSelector.locale}" ></rich:calendar>
+		 	<h:outputLabel value="Bitiş Tarihi" />
+		 	<rich:calendar datePattern="dd/M/yyyy" value="#{reports.bitisTarihi}" locale="#{localeSelector.locale}" ></rich:calendar>
+		    <h:selectOneMenu id="magaza2Id" value="#{reports.magazap}">
+	   			<s:selectItems value="#{magazaList.resultList}" var="m" label="#{m.name}" noSelectionLabel="Lutfen Seciniz"/>
+	   			<s:convertEntity />
+	   		</h:selectOneMenu>	   
+			<h:commandButton id="r2" value="Listele" action="#{reports.manueldata()}"/>		          
+  			
+  			<h:commandButton value="Manuel Sevkiyat Hazırla" action="#{reports.manuelraporlist()}"/>	
+			
+       		<rich:dataTable id="simpletable2" value="#{reports.lst}" var="data" rows="15" >
+      			
+                <rich:column>
+                 <f:facet name="header">SR NO</f:facet>
+                    <h:outputText value="#{data.sr}" />
+                 </rich:column>
+                 <rich:column>
+                 <f:facet name="header">Seri</f:facet>
+                   <h:outputText value="#{data.seri}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Model</f:facet>
+                   <h:outputText value=" #{data.model.name}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Tespit</f:facet>
+                  <h:outputText value="#{data.arizaTespit}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Onay</f:facet>
+                  <h:outputText value="#{data.onay}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Açıklama</f:facet>
+                  <h:outputText value="#{data.aciklama}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Çıkış Tarihi</f:facet>
+                  <h:outputText value="#{data.cikisTarihi}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Ücret</f:facet>
+                 <h:outputText value="#{data.ucret}" />
+                </rich:column>
+                
+            </rich:dataTable>
+        	<rich:datascroller for="simpletable2"/>
+        	 <!--<h:graphicImage value="/img/true.png" /> -->
+			<h:outputLabel value="" />		
+     		<s:link id="done"
+               value="Excel Aktar"
+                view="/excelaktar.xhtml"/> 
+			
+		 </rich:tab><!-- 
+		<rich:tab label="E-Mail">
+				 	<h:outputLabel value="Başlangıç Tarihi" />
+		 	<rich:calendar datePattern="dd/M/yyyy" value="#{reports.baslangicTarihi}" locale="#{localeSelector.locale}" ></rich:calendar>
+		 	<h:outputLabel value="Bitiş Tarihi" />
+		 	<rich:calendar datePattern="dd/M/yyyy" value="#{reports.bitisTarihi}" locale="#{localeSelector.locale}" ></rich:calendar>
+		    <h:selectOneMenu id="magaza3Id">
+	   			<s:selectItems value="#{magazaList.resultList}" var="m" itemLabel="#{m.name}" noSelectionLabel="Lutfen Seciniz"/>
+	   			<s:convertEntity />
+	   		</h:selectOneMenu>	   
+			<h:commandButton id="r3" value="Listele" action="#{reports.manueldataemail()}"/>		          
+  			  					
+       		<rich:dataTable id="simpletable3" value="#{reports.lst}" var="data" rows="15" >
+      			
+                <rich:column>
+                 <f:facet name="header">SR NO</f:facet>
+                    <h:outputText value="#{data.sr}" />
+                 </rich:column>
+                 <rich:column>
+                 <f:facet name="header">Seri</f:facet>
+                   <h:outputText value="#{data.seri}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Model</f:facet>
+                   <h:outputText value=" #{data.model.name}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Tespit</f:facet>
+                  <h:outputText value="#{data.arizaTespit}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Onay</f:facet>
+                  <h:outputText value="#{data.onay}" />
+                </rich:column>
+                <rich:column>
+                 <f:facet name="header">Açıklama</f:facet>
+                  <h:outputText value="#{data.aciklama}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Çıkış Tarihi</f:facet>
+                  <h:outputText value="#{data.cikisTarihi}" />
+                </rich:column>
+                <rich:column>
+                <f:facet name="header">Ücret</f:facet>
+                 <h:outputText value="#{data.ucret}" />
+                </rich:column>
+                
+            </rich:dataTable>
+        	<rich:datascroller for="simpletable3"/>-->
+        	 <!--<h:graphicImage value="/img/true.png" /> -->
+			<!-- <h:outputLabel value="" />		
+			 
+		</rich:tab>	 -->	
+		</rich:tabPanel>
+		
+    </rich:panel>
+    
+ </h:form>
+</ui:define>
+			
+</ui:composition>

@@ -1,0 +1,32 @@
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <rich:toolBarGroup>
+        <s:link id="ayarlarHomeId" view="/ayarlar.xhtml" value="Ayarlar" propagation="none"/>
+        <s:link id="menuHomeId" view="/home.xhtml" value="AnaSayfa" propagation="none"/>
+        <s:link id="menuRoleId" view="/role.xhtml" value="Yetki" propagation="none" />
+        <s:link id="menuKullaniciId" view="/kullanici.xhtml" value="Kullanici" propagation="none" />
+        <s:link id="menuMailId" view="/mail.xhtml"  value="Mail" propagation="none"/>
+        <s:link id="menuMarkaId" view="/marka.xhtml" value="Marka" propagation="none" />
+        <s:link id="menuModelId" view="/model.xhtml" value="Model" propagation="none" />
+     	<s:link id="menuAksesuarId" view="/aksesuar.xhtml" value="Aksesuar" propagation="none" />
+        <s:link id="menuMagazaId" view="/magaza.xhtml" value="Mağaza" propagation="none" />
+        <s:link id="menuSubeId" view="/sube.xhtml" value="Şube" propagation="none" />
+        <s:link id="menuUrunGirisId" view="/urunGiris.xhtml" value="Ürün Giriş" propagation="none"/>
+        <s:link id="menuMusteriId" view="/musteriGiris.xhtml" value="Müşteri" propagation="none"/>
+        <s:link id="raporId" view="/rapor.xhtml" value="Rapor" propagation="none"/>
+        <s:link id="menuReportId" view="/reports.xhtml" value="Sevkiyat" propagation="none"/>
+        <!-- <s:link id="menuYazdirId" view="/yazdir.xhtml" value="Yazdir" propagation="none"/> -->
+        
+    </rich:toolBarGroup>
+    <!-- @newMenuItem@ -->
+    <rich:toolBarGroup location="right">
+        <h:outputText id="menuWelcomeId" value="signed in as: #{credentials.username}" rendered="#{identity.loggedIn}"/>
+        <s:link id="menuLoginId" view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
+        <s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+    </rich:toolBarGroup>
+</rich:toolBar>

@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="mailForm" rendered="#{identity.loggedIn}">
+
+        <rich:panel>
+            <f:facet name="header">Mail</f:facet>
+			
+			<s:decorate id="subeField" template="layout/edit.xhtml">
+                <ui:define name="label">Sube</ui:define>
+                <h:selectOneMenu value="#{mailHome.instance.sube}" id="subeid" required="true">
+                	<s:selectItems value="#{subeList.resultList}" var="m"
+								label="#{m.name}" noSelectionLabel="Lutfen Seciniz"/>
+								<s:convertEntity/>
+                </h:selectOneMenu>
+            </s:decorate>
+			
+            <s:decorate id="nameField" template="layout/edit.xhtml">
+                <ui:define name="label">Ad Soyad</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{mailHome.instance.name}"/>
+            </s:decorate>
+            
+            <s:decorate id="mailField" template="layout/edit.xhtml">
+                <ui:define name="label">Mail Adres</ui:define>
+                <h:inputText id="mailid" required="true" size="45"
+                             value="#{mailHome.instance.mailAdres}"/>
+            </s:decorate>
+
+            <div style="clear:both"/>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Kaydet"
+                         action="#{mailHome.persist}"
+                       rendered="#{!mailHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Güncelle"
+                         action="#{mailHome.update}"
+                       rendered="#{mailHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Sil"
+                         action="#{mailHome.remove}"
+                      immediate="true"
+                       rendered="#{mailHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Listele"
+                             view="/mailList.xhtml"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>
